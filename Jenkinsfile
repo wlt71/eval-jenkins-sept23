@@ -1,6 +1,6 @@
 pipeline {
     environment { // Declaration of environment variables
-        DOCKER_ID="wldhub71" // docker-id for dockerhub repository
+        DOCKER_ID="wldhub71" // docker-id for dockerhub repository for images
         DOCKER_CAST_IMAGE="cast-service"
         DOCKER_MOVIE_IMAGE="movie-service"
         DOCKER_TAG = "v.${BUILD_ID}.0" // image with the current build - increment by 1 
