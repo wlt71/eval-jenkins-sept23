@@ -1,0 +1,75 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-{{ .Values.db.name }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 10Gi
+
+---
+
+apiVersion: v1
+data:
+  POSTGRES_DB: {{ .Values.db.postgresdb }}
+  POSTGRES_PASSWORD: {{ .Values.db.postgrespassword }}
+  POSTGRES_USER: {{ .Values.db.postgresuser }}
+kind: Secret
+metadata:
+  name: {{ .Values.db.name }}-config
+  
+---
+
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+ name: {{ .Values.db.name }}-statefulset
+spec:
+ selector:
+   matchLabels:
+     app: {{ .Values.db.name }}
+ serviceName: {{ .Values.db.name }}
+ replicas: 1
+ template:
+   metadata:
+     labels:
+       app: {{ .Values.db.name }}
+   spec:
+     containers:
+     - name: {{ .Values.db.name }}
+       image: {{ .Values.db.image }}
+       volumeMounts:
+        - name: {{ .Values.db.name }}-volume
+          mountPath: /var/lib/postgresql/data/
+       ports:
+       - containerPort: 5432
+         name: {{ .Values.db.name }}
+       envFrom:
+       - secretRef:
+          name: {{ .Values.db.name }}-config
+     volumes:
+     - name: {{ .Values.db.name }}-volume
+       persistentVolumeClaim:
+          claimName: pvc-{{ .Values.db.name }}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.db.name }}
+spec:
+  selector:
+    app: {{ .Values.db.name }}
+  type: ClusterIP
+  ports:
+  - name: http
+    protocol: TCP
+    port: 5432
+    targetPort: 5432
+
+---
+

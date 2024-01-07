@@ -1,0 +1,18 @@
+# Default values for HELM.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+
+app_config:
+  database_uri: cG9zdGdyZXNxbDovL21vdmllX2RiX3VzZXJuYW1lOm1vdmllX2RiX3Bhc3N3b3JkQG1vdmllLWRiL21vdmllX2RiX2Rldg==
+  cast_service_host_url: aHR0cDovL2Nhc3Rfc2VydmljZTo4MDAwL2FwaS92MS9jYXN0cy8=
+
+app_image:
+  repository: farloche/movie-service
+  tag: "v.11.0"
+  port: 8000
+
+replicaCount: 1
+
+app_clusterip:
+  port: 8001

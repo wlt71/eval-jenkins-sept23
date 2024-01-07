@@ -1,0 +1,17 @@
+# Default values for HELM.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+
+app_config:
+  database_uri: cG9zdGdyZXNxbDovL2Nhc3RfZGJfdXNlcm5hbWU6Y2FzdF9kYl9wYXNzd29yZEBjYXN0LWRiL2Nhc3RfZGJfZGV2
+
+app_image:
+  repository: farloche/cast-service
+  tag: "v.11.0"
+  port: 8000
+
+replicaCount: 1
+
+app_clusterip:
+  port: 8002

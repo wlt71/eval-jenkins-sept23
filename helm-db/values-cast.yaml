@@ -1,0 +1,10 @@
+# Default values for HELM.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+db:
+  name: cast-db
+  image: postgres:12.0-alpine
+  postgresdb: Y2FzdF9kYl9kZXY=
+  postgrespassword: Y2FzdF9kYl9wYXNzd29yZA==
+  postgresuser: Y2FzdF9kYl91c2VybmFtZQ==
